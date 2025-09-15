@@ -19,8 +19,30 @@
       40% { transform: translateY(-10px); }
       60% { transform: translateY(-5px); }
     }
-    a { color: #34d399; }
-    a:hover { text-decoration: underline; }
+    .gallery-img {
+      width: 100%;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .gallery-img:hover {
+      transform: scale(1.05);
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+    }
   </style>
 </head>
 <body class="text-white">
@@ -33,28 +55,24 @@
     <!-- Daftar Desain Kaos -->
     <section>
       <h2 class="text-2xl font-semibold mb-4">Koleksi Kaos</h2>
-      <div class="grid md:grid-cols-3 gap-6">
-        <!-- Tema Streetwear -->
-        <div class="bg-gray-800 rounded-2xl p-4 shadow-lg">
-          <h3 class="text-xl font-bold mb-2">Streetwear</h3>
-          <img src="https://images.unsplash.com/photo-1602810318383-9ec9c6cf2ce9?auto=format&fit=crop&w=600&q=80" class="rounded-xl mb-2" alt="Streetwear">
-          <p>Kaos gaya jalanan yang keren untuk gaya santai.</p>
-          <button onclick="addToCart('Streetwear', this.previousElementSibling.src)" class="mt-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-xl">Tambah ke Keranjang</button>
+      <div class="grid md:grid-cols-4 gap-4">
+        <!-- Template Item -->
+        <div class="bg-gray-800 rounded-2xl p-2 shadow-lg">
+          <h3 class="text-lg font-bold mb-1">Streetwear</h3>
+          <img src="https://images.unsplash.com/photo-1602810318383-9ec9c6cf2ce9?auto=format&fit=crop&w=300&q=80" class="gallery-img rounded-xl mb-1" alt="Streetwear" onclick="openModal(this.src)">
+          <button onclick="addToCart('Streetwear', this.previousElementSibling.src)" class="mt-1 bg-green-500 hover:bg-green-600 px-2 py-1 rounded-xl text-sm">Tambah</button>
         </div>
-        <!-- Tema Minimalis -->
-        <div class="bg-gray-800 rounded-2xl p-4 shadow-lg">
-          <h3 class="text-xl font-bold mb-2">Minimalis</h3>
-          <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80" class="rounded-xl mb-2" alt="Minimalis">
-          <p>Kaos sederhana dengan desain clean dan elegan.</p>
-          <button onclick="addToCart('Minimalis', this.previousElementSibling.src)" class="mt-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-xl">Tambah ke Keranjang</button>
+        <div class="bg-gray-800 rounded-2xl p-2 shadow-lg">
+          <h3 class="text-lg font-bold mb-1">Minimalis</h3>
+          <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=300&q=80" class="gallery-img rounded-xl mb-1" alt="Minimalis" onclick="openModal(this.src)">
+          <button onclick="addToCart('Minimalis', this.previousElementSibling.src)" class="mt-1 bg-green-500 hover:bg-green-600 px-2 py-1 rounded-xl text-sm">Tambah</button>
         </div>
-        <!-- Tema Vintage -->
-        <div class="bg-gray-800 rounded-2xl p-4 shadow-lg">
-          <h3 class="text-xl font-bold mb-2">Vintage</h3>
-          <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=600&q=80" class="rounded-xl mb-2" alt="Vintage">
-          <p>Kaos bergaya retro untuk kamu yang suka klasik.</p>
-          <button onclick="addToCart('Vintage', this.previousElementSibling.src)" class="mt-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-xl">Tambah ke Keranjang</button>
+        <div class="bg-gray-800 rounded-2xl p-2 shadow-lg">
+          <h3 class="text-lg font-bold mb-1">Vintage</h3>
+          <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=300&q=80" class="gallery-img rounded-xl mb-1" alt="Vintage" onclick="openModal(this.src)">
+          <button onclick="addToCart('Vintage', this.previousElementSibling.src)" class="mt-1 bg-green-500 hover:bg-green-600 px-2 py-1 rounded-xl text-sm">Tambah</button>
         </div>
+        <!-- Tambahkan item baru cukup copy div di atas -->
       </div>
     </section>
 
@@ -79,16 +97,17 @@
     </section>
 
     <!-- Kontak & WhatsApp -->
-    <section class="flex flex-col md:flex-row justify-between items-center bg-gray-800 p-6 rounded-2xl shadow-lg">
-      <div>
-        <h2 class="text-2xl font-semibold mb-2">Hubungi Kami</h2>
-        <p>WhatsApp: <a href="https://wa.me/6281234567890" target="_blank">+62 812-3456-7890</a></p>
-      </div>
-      <a href="https://wa.me/6281234567890" target="_blank" class="bounce mt-4 md:mt-0">
+    <section class="flex justify-center bg-gray-800 p-6 rounded-2xl shadow-lg">
+      <a href="https://wa.me/6281234567890" target="_blank" class="bounce">
         <i data-feather="message-circle" class="w-12 h-12 text-green-400"></i>
       </a>
     </section>
   </main>
+
+  <!-- Modal untuk zoom gambar -->
+  <div id="imgModal" class="modal" onclick="closeModal()">
+    <img id="modalImg" src="">
+  </div>
 
   <footer class="p-4 text-center bg-gray-900 mt-10">
     <p>&copy; 2025 Toko Kaos Keren. All rights reserved.</p>
@@ -136,7 +155,16 @@
       let bodyText = 'Halo, saya ingin memesan kaos berikut:\n';
       cart.forEach(item => bodyText += '- ' + item.name + '\n');
       const body = encodeURIComponent(bodyText);
-      window.location.href = `mailto:workshopdesain22@gmail.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:emailanda@example.com?subject=${subject}&body=${body}`;
+    }
+
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('imgModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('imgModal').style.display = 'none';
     }
   </script>
 </body>
