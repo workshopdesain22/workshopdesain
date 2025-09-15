@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toko Kaos Keren</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    body {
+      background: url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .bounce {
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+  </style>
+</head>
+<body class="bg-black bg-opacity-70 text-white">
+  <header class="p-6 text-center bg-black bg-opacity-60 shadow-lg">
+    <h1 class="text-3xl font-bold">Toko Kaos Keren</h1>
+    <p class="text-lg">Desain Kaos Unik & Stylish</p>
+  </header>
+
+  <main class="p-6 space-y-10">
+    <!-- Daftar Desain Kaos -->
+    <section>
+      <h2 class="text-2xl font-semibold mb-4">Koleksi Kaos</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Tema Streetwear -->
+        <div class="bg-white bg-opacity-10 rounded-2xl p-4 shadow-lg">
+          <h3 class="text-xl font-bold mb-2">Streetwear</h3>
+          <img src="https://images.unsplash.com/photo-1602810318383-9ec9c6cf2ce9?auto=format&fit=crop&w=600&q=80" class="rounded-xl mb-2" alt="Streetwear">
+          <p>Kaos gaya jalanan yang keren untuk gaya santai.</p>
+          <button onclick="addToCart('Streetwear', this.previousElementSibling.src)" class="mt-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-xl">Tambah ke Keranjang</button>
+        </div>
+        <!-- Tema Minimalis -->
+        <div class="bg-white bg-opacity-10 rounded-2xl p-4 shadow-lg">
+          <h3 class="text-xl font-bold mb-2">Minimalis</h3>
+          <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80" class="rounded-xl mb-2" alt="Minimalis">
+          <p>Kaos sederhana dengan desain clean dan elegan.</p>
+          <button onclick="addToCart('Minimalis', this.previousElementSibling.src)" class="mt-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-xl">Tambah ke Keranjang</button>
+        </div>
+        <!-- Tema Vintage -->
+        <div class="bg-white bg-opacity-10 rounded-2xl p-4 shadow-lg">
+          <h3 class="text-xl font-bold mb-2">Vintage</h3>
+          <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=600&q=80" class="rounded-xl mb-2" alt="Vintage">
+          <p>Kaos bergaya retro untuk kamu yang suka klasik.</p>
+          <button onclick="addToCart('Vintage', this.previousElementSibling.src)" class="mt-2 bg-green-500 hover:bg-green-600 px-3 py-1 rounded-xl">Tambah ke Keranjang</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Keranjang Belanja -->
+    <section class="bg-white bg-opacity-10 rounded-2xl p-6 shadow-lg">
+      <h2 class="text-2xl font-semibold mb-4">Keranjang Belanja</h2>
+      <ul id="cartItems" class="list-disc pl-6 mb-4">
+        <li>Belum ada item di keranjang.</li>
+      </ul>
+      <p id="cartCount" class="mb-4">Jumlah item: 0</p>
+      <button onclick="sendOrder()" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-xl">Kirim Pesanan via Email</button>
+    </section>
+
+    <!-- Informasi Umum -->
+    <section class="bg-white bg-opacity-10 rounded-2xl p-6 shadow-lg">
+      <h2 class="text-2xl font-semibold mb-4">Tips Dunia Clothing</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Pilih bahan kaos yang nyaman dan breathable.</li>
+        <li>Sesuaikan desain dengan kepribadianmu.</li>
+        <li>Rawat kaos dengan mencuci sesuai instruksi label.</li>
+      </ul>
+    </section>
+
+    <!-- Kontak & WhatsApp -->
+    <section class="flex flex-col md:flex-row justify-between items-center bg-white bg-opacity-10 p-6 rounded-2xl shadow-lg">
+      <div>
+        <h2 class="text-2xl font-semibold mb-2">Hubungi Kami</h2>
+        <p>WhatsApp: <a href="https://wa.me/6281234567890" target="_blank" class="text-green-400 underline">+62 812-3456-7890</a></p>
+      </div>
+      <a href="https://wa.me/6281234567890" target="_blank" class="bounce mt-4 md:mt-0">
+        <i data-feather="message-circle" class="w-12 h-12 text-green-400"></i>
+      </a>
+    </section>
+  </main>
+
+  <footer class="p-4 text-center bg-black bg-opacity-60 mt-10">
+    <p>&copy; 2025 Toko Kaos Keren. All rights reserved.</p>
+  </footer>
+
+  <script>
+    feather.replace();
+
+    let cart = [];
+
+    function addToCart(name, imgSrc) {
+      cart.push({name, imgSrc});
+      updateCartUI();
+      alert(name + ' berhasil ditambahkan ke keranjang!');
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const cartList = document.getElementById('cartItems');
+      const cartCount = document.getElementById('cartCount');
+      cartList.innerHTML = '';
+      if (cart.length === 0) {
+        cartList.innerHTML = '<li>Belum ada item di keranjang.</li>';
+      } else {
+        cart.forEach((item, index) => {
+          const li = document.createElement('li');
+          li.className = 'flex items-center mb-2';
+          li.innerHTML = `<img src='${item.imgSrc}' class='w-12 h-12 mr-2 rounded' alt='${item.name}'> ${item.name} <button onclick='removeFromCart(${index})' class='ml-2 text-red-500 hover:text-red-700'>Hapus</button>`;
+          cartList.appendChild(li);
+        });
+      }
+      cartCount.textContent = 'Jumlah item: ' + cart.length;
+    }
+
+    function sendOrder() {
+      if (cart.length === 0) {
+        alert('Keranjang kosong! Tambahkan item dulu.');
+        return;
+      }
+      const subject = encodeURIComponent('Pesanan Kaos');
+      let bodyText = 'Halo, saya ingin memesan kaos berikut:\n';
+      cart.forEach(item => bodyText += '- ' + item.name + '\n');
+      const body = encodeURIComponent(bodyText);
+      window.location.href = `mailto:emailanda@example.com?subject=${subject}&body=${body}`;
+    }
+  </script>
+</body>
+</html>
